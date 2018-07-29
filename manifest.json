@@ -1,0 +1,28 @@
+  {
+    "name": "Custom Youtube Playback Hotkey",
+    "version": "1.0",
+    "description": "Build an custom playback hotkey for Youtube",
+    "permissions": [
+      "activeTab",
+      "storage"
+    ],
+    "content_scripts": [
+      {
+        "matches": [
+          "*://*.youtube.com/*"
+        ],
+        "exclude_matches": [
+          "*://*.youtube.com/",
+          "*://*.youtube.com"
+        ],
+        "css": [
+          "content.css"
+        ],
+        "js": [
+          "contentScript.js"
+        ],
+        "run_at": "document_end"
+      }
+    ],
+    "manifest_version": 2
+  }
