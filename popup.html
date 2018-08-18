@@ -1,15 +1,31 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <style>
-        button {
-          height: 30px;
-          width: 30px;
-          outline: none;
-        }
-      </style>
-    </head>
-    <body>
-      <button id="changeColor"></button>
-    </body>
-  </html>
+<html>
+
+<head>
+  <link rel="stylesheet" type="text/css" href="css/popup.css">
+  <script src="js/popup.js"></script>
+</head>
+
+<body>
+  <img class="logo" src="images/logo.jpg">
+  <div class="form">
+    <div class=form-item>
+      <span class="form-item-label">Increase Speed Key</span>
+      <input type="text" id="increaseKey" />
+    </div>
+    <div class=form-item>
+      <span class="form-item-label">Decrease Speed Key</span>
+      <input type="text" id="decreaseKey" />
+    </div>
+    <div class="form-footer">
+      <input type="button" id="btnSave" value="Save" />
+    </div>
+
+    <div class="form-message hidden">
+      <span id="message">Setting saved successful.</span>
+    </div>
+  </div>
+
+</body>
+
+</html>
