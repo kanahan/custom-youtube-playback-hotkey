@@ -1,0 +1,54 @@
+body {
+  border: 1px solid black;
+  width: 200px;
+}
+
+.logo {
+  display: block;
+  margin: 10px auto;
+  height: 100px;
+}
+
+.form {
+  font-family: arial;
+  padding: 10px;
+}
+
+.form-item {
+  padding-bottom: 10px;
+}
+
+.form-item input {
+  width: 100%;
+}
+
+.form-item-label {
+  display: block;
+}
+
+.form-footer {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.form-footer input {
+  height: 40px;
+  width: 100%;
+}
+
+.form-message {
+  padding-top: 10px;
+  font-size: 14px;
+}
+
+.form-message.hidden {
+  display: none;
+}
+
+.form-message.success {
+  color: green;
+}
+
+.form-message.failed {
+  color: red;
+}
