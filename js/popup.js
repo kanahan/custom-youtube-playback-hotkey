@@ -13,11 +13,28 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const txtDKey = document.getElementById("decreaseKey");
   txtDKey.addEventListener('keydown', function () {
+    console.log(event)
     if (txtDKey.value.length > 0 && event.keyCode !== 8) {
       event.preventDefault();
     }
   });
+
+  loadSavedData();
 });
+
+function loadSavedData() {
+  chrome.storage.sync.get(["youtubeSpeedControl_increaseSpeedKey"], function (result) {
+    if (Object.keys(result).length) {
+      document.getElementById("increaseKey").value = result.youtubeSpeedControl_increaseSpeedKey;
+    }
+  });
+
+  chrome.storage.sync.get(["youtubeSpeedControl_decreaseSpeedKey"], function (result) {
+    if (Object.keys(result).length) {
+      document.getElementById("decreaseKey").value = result.youtubeSpeedControl_decreaseSpeedKey;
+    }
+  });
+}
 
 function saveSettings() {
   const iKey = document.getElementById("increaseKey").value;

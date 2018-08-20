@@ -1,38 +1,56 @@
-// ================== Add big element into Youtube video ==================
-// create SpanSpeedRate element
-var SpanSpeedRate = document.createElement("span");
-SpanSpeedRate.classList.add("SpanSpeedRate");
+var videoContentLoaded = false;
 
-// create SpanSpeedRate element
-var DivSpanSpeedRate = document.createElement("div");
-DivSpanSpeedRate.classList.add("DivSpanSpeedRate");
-DivSpanSpeedRate.appendChild(SpanSpeedRate);
+chrome.runtime.onMessage.addListener(
+  function (request, sender) {
+    if (request.data && !videoContentLoaded && document.getElementsByClassName("html5-video-player")[0]) {
+      loadViewContent();
+    }
+  }
+);
 
-// create divSpeedRate element
-var divSpeedRate = document.createElement("div");
-divSpeedRate.classList.add("DivSpeedRate");
-divSpeedRate.appendChild(DivSpanSpeedRate);
+if (document.getElementsByClassName("html5-video-player")[0]) {
+  loadViewContent();
+}
 
-// add div into youtube's element
-var divVideo = document.getElementsByClassName("html5-video-player")[0];
-divVideo.insertBefore(divSpeedRate, divVideo.childNodes[0]);
+function loadViewContent() {
+  videoContentLoaded = true;
+
+  // ================== Add big element into Youtube video ==================
+  // create SpanSpeedRate element
+  var SpanSpeedRate = document.createElement("span");
+  SpanSpeedRate.classList.add("SpanSpeedRate");
+
+  // create SpanSpeedRate element
+  var DivSpanSpeedRate = document.createElement("div");
+  DivSpanSpeedRate.classList.add("DivSpanSpeedRate");
+  DivSpanSpeedRate.appendChild(SpanSpeedRate);
+
+  // create divSpeedRate element
+  var divSpeedRate = document.createElement("div");
+  divSpeedRate.classList.add("DivSpeedRate");
+  divSpeedRate.appendChild(DivSpanSpeedRate);
+
+  // add div into youtube's element
+  var divVideo = document.getElementsByClassName("html5-video-player")[0];
+  divVideo.insertBefore(divSpeedRate, divVideo.childNodes[0]);
 
 
-// ================== Add static element into Youtube video ==================
-// create pStaticSpeedRate element
-var pStaticSpeedRate = document.createElement("span");
-pStaticSpeedRate.classList.add("PStaticSpeedRate");
+  // ================== Add static element into Youtube video ==================
+  // create pStaticSpeedRate element
+  var pStaticSpeedRate = document.createElement("span");
+  pStaticSpeedRate.classList.add("PStaticSpeedRate");
 
-// create divStaticSpeedRate element
-var divStaticSpeedRate = document.createElement("div");
-divStaticSpeedRate.classList.add("DivStaticSpeedRate");
-divStaticSpeedRate.appendChild(pStaticSpeedRate);
+  // create divStaticSpeedRate element
+  var divStaticSpeedRate = document.createElement("div");
+  divStaticSpeedRate.classList.add("DivStaticSpeedRate");
+  divStaticSpeedRate.appendChild(pStaticSpeedRate);
 
-// add div into youtube's element
-var divVideo = document.getElementsByClassName("html5-video-player")[0];
-divVideo.insertBefore(divStaticSpeedRate, divVideo.childNodes[0]);
+  // add div into youtube's element
+  var divVideo = document.getElementsByClassName("html5-video-player")[0];
+  divVideo.insertBefore(divStaticSpeedRate, divVideo.childNodes[0]);
 
-getUserStorage();
+  getUserStorage();
+}
 
 var arrIncreasePlaybackRateKey = [];
 var arrDecreasePlaybackRateKey = [];
@@ -53,9 +71,10 @@ addEventListener('keydown', function (evt) {
 
   evt.preventDefault();
 
+  var isUrlContainWatch = window.location.pathname === "/watch";
   var videoElement = document.querySelector("video");
 
-  if (videoElement && !evt.ctrlKey && !evt.shiftKey && !evt.altKey) {
+  if (isUrlContainWatch && videoElement && !evt.ctrlKey && !evt.shiftKey && !evt.altKey) {
     var rate = videoElement.playbackRate;
     if (arrIncreasePlaybackRateKey.includes(evt.key)) {
       rate += 0.25;
@@ -79,7 +98,7 @@ addEventListener('keydown', function (evt) {
     rate = Math.trunc(rate * 4) / 4;
     videoElement.playbackRate = rate;
     updateSpeedRate();
-    showUpInFrontEnd(0.3, divSpeedRate); // show up for 0.3 second
+    showUpInFrontEnd(0.3, document.getElementsByClassName("DivSpeedRate")[0]); // show up for 0.3 second
   }
 });
 
@@ -117,17 +136,14 @@ function getUserStorage() {
   // get increment key
   chrome.storage.sync.get(["youtubeSpeedControl_increaseSpeedKey"], function (result) {
     if (Object.keys(result).length) {
-      arrIncreasePlaybackRateKey.push(result.youtubeSpeedControl_increaseSpeedKey)
+      arrIncreasePlaybackRateKey.push(result.youtubeSpeedControl_increaseSpeedKey);
     }
   });
 
   // get decrement key
   chrome.storage.sync.get(["youtubeSpeedControl_decreaseSpeedKey"], function (result) {
     if (Object.keys(result).length) {
-      arrDecreasePlaybackRateKey.push(result.youtubeSpeedControl_decreaseSpeedKey)
+      arrDecreasePlaybackRateKey.push(result.youtubeSpeedControl_decreaseSpeedKey);
     }
   });
-
 }
-
-
