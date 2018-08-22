@@ -1,12 +1,25 @@
 body {
-  border: 1px solid black;
-  width: 200px;
+  margin: 0 1em;
+  width: 388px;
+}
+
+.title {
+  color: grey;
+  font-size: 17px;
+  font-weight: bold;
+  overflow: auto;
+  border-bottom: 1px solid #eee;
 }
 
 .logo {
-  display: block;
-  margin: 10px auto;
-  height: 100px;
+  float: left;
+  margin: 10px 10px;
+  height: 50px;
+}
+
+h2 {
+  float: left;
+  margin: 16px 5px;
 }
 
 .form {
