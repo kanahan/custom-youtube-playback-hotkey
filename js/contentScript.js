@@ -1,16 +1,10 @@
 var videoContentLoaded = false;
 
-chrome.runtime.onMessage.addListener(
-  function (request, sender) {
-    if (request.data && !videoContentLoaded && document.getElementsByClassName("html5-video-player")[0]) {
-      loadViewContent();
-    }
+document.addEventListener("yt-navigate-finish", function (event) {
+  if (!videoContentLoaded && document.getElementsByClassName("html5-video-player")[0]) {
+    loadViewContent();
   }
-);
-
-if (document.getElementsByClassName("html5-video-player")[0]) {
-  loadViewContent();
-}
+});
 
 function loadViewContent() {
   videoContentLoaded = true;
